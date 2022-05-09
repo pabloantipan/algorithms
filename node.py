@@ -29,13 +29,27 @@ class SimpleNode(BaseNode):
     def __str__(self) -> str:
         return f"node information: {self.information}"
 
-    def get_last(self, order=1):
+    def get_all_items(self):
+        """Returns array with all items."""
+        items = []
+        return self.__hidden_give_all(items)
+
+    def __hidden_give_all(self, items=[]):
+        """Auxiliary function for recursive iteration."""
+        items.append(self.information)
+
+        if self.__next_node is None:
+            return items
+
+        return self.__next_node.__hidden_give_all(items)
+
+    def get_last(self, order=0):
         """Recursive funcion to get last node in the queue."""
+        order += 1
         if self.__next_node is None:
             self.__next_node = None
             return self, order
 
-        order += 1
         return self.__next_node.get_last(order)
 
     def add_first_node(self, node):
@@ -111,7 +125,25 @@ class SimpleNode(BaseNode):
         order += 1
         return self.__next_node.__hidden_quantity(order)
 
+    def add_array_at_end(self, items):
+        last_node, _ = self.get_last()
+        if not last_node.__previous_node:
+            last_node = self
+
+        for item in items:
+            last_node.__previous_node.__next_node.add_information(item)
+
 
 if __name__ == "__main__":
     node = SimpleNode("ola")
-    print(node)
+    # print(node)
+
+    items = [1, 2, 3, 4, 5, 6]
+
+    for item in items:
+        node.add_information(item)
+
+    node.add_array_at_end(items)
+
+    itms = node.get_all_items()
+    print(itms)

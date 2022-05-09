@@ -10,6 +10,13 @@ class SimpleQueue:
         self.__first_node = None
         self.__quantity = 0
 
+    @property
+    def quantity(self):
+        """Property of items counting."""
+        self.__quantity = self.__first_node.quantity()
+
+        return self.__quantity
+
     def add(self, information):
         """Add a new item to the end of the queue."""
         if self.__first_node is None:
@@ -25,7 +32,7 @@ class SimpleQueue:
         return f"{node} {self.__quantity}"
 
     def show_first(self):
-        """Show the first sssitem of the queue, no altenering items."""
+        """Show the first item of the queue, no altenering items."""
         return f"{self.__first_node}"
 
     def take(self):
@@ -49,12 +56,13 @@ class SimpleQueue:
 
         return found.information, order
 
-    @property
-    def quantity(self):
-        """Property of items counting."""
-        self.__quantity = self.__first_node.quantity()
+    def give_all(self):
+        """Return and array with all items."""
+        return self.__first_node.get_all_items()
 
-        return self.__quantity
+    def insert_array_at_end(self, items):
+        """Add all array's items at the end of the queue."""
+        return self.__first_node.add_array_at_end(items)
 
 
 if __name__ == "__main__":
@@ -65,5 +73,11 @@ if __name__ == "__main__":
 
     print("first:", queue.show_first())
     print("last:", queue.show_last())
-    print("found:", queue.find("olo"))
+    # print("found:", queue.find("olo"))
     print("quantity:", queue.quantity)
+
+    items = [1, 2, 3, 4, 5, 6]
+    queue.insert_array_at_end(items)
+
+    itms = queue.give_all()
+    print(itms)
