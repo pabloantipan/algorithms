@@ -1,6 +1,6 @@
 """Queue implementation with linked list."""
 
-from node import SimpleNode
+from src.node import SimpleNode
 
 
 class SimpleQueue:
